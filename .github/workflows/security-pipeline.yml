@@ -23,6 +23,16 @@ jobs:
       - name: Smoke test
         run: ./scripts/smoke_test.sh
 
+      - name: Install Valgrind
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y valgrind
+
+      - name: Run Valgrind Memcheck
+        run: |
+          valgrind --error-exitcode=1 ./build/vulnshop config/sandbox.ini
+  
+
       # No SAST. No SCA. No SBOM. No sanitizer run. No Valgrind.
       # The token below can write to the repository, which it does not need.
       - name: Publish
